@@ -1,0 +1,51 @@
+- What would you do differently if you had more time?
+
+  * Since I'm doing looping the top list once, I don't have in mind what else I can do.
+
+- What is the runtime complexity of each function?
+
+  * request_handled : O(n) 'n' being the limit of the top list
+
+  * getTopList: O(1) just retuning the list
+
+  * clear: O(1) re-assigning empty values
+
+- How does your code work?
+
+  * IpTracker class  has the atributes: 
+   . topListLimit: limit pass as parameter, if not defined then limit is set to 100
+   . topList: an array to store the top list ip
+   . ipCountMap: Javascript Map object (hash map data structure) to store the ips and its ipCountMap
+
+  * request_handled(ip):
+   . Prepare the count of the incoming ip, if not exists in the map then the count will be 1.
+   . Set the count in the map, if exists it will be replaced by the new one.
+   . Find the current position of the ip in the top list, if not found then the position will be the last one
+   . We are going be moving from the current position found (or last one) to the beginnig of the top list comparing each ip with 
+     the current incomming ip count and verifying if the incomming ip count is greater than the previous one.
+     then we will assign that ip in that position to the current position... moving all ip to the right until we reach the right postion. 
+   . Having moved all the ips then we just put the ip in its place
+   . Finally we keep the top list length to 100 or the limit defined.
+
+  * getTopListLimit:
+   . Get method to return the top limit list specified
+  
+  * getTopList:
+   . Return the top list array
+
+  * clear:
+  . clears map and top list
+
+- What other approaches did you decide not to pursue?
+
+  * An approach that I definitely won't take is probably the simplest one that is to calculate the top 100
+    by doing a sort of the map by the count, so that sort every time you call the top100 will increase
+    a lot the runtime execution if we have million of ips. Having a top list with a defined limit and handling 
+    the top when an ip is coming ios the best approach instead of loopping and sorting for getting the top list .
+
+- How would you test this?
+
+ * I would test this using a small set of ips with a defined occurences, just to verify that it works fine and as expected. 
+ * Later on I would test a big set of data and verify if the result generating random ip in random order
+ * Finally I would testing this having a environment similar to production as much as we can to simulate the concurrency and
+   test the performance with ramdom data and with occurences that can be verified.
